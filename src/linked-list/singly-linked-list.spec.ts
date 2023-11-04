@@ -1,61 +1,21 @@
 import { test, describe } from "node:test";
 import assert from "node:assert";
-import { SinglyLinkedList } from "./singly-linked-list";
+import { LinkedListNode, SinglyLinkedList } from "./singly-linked-list";
 
 describe("Singly Linked List tests", () => {
-  test("should insert new value in begin", () => {
-    const singlyLinkedList: SinglyLinkedList<number> = new SinglyLinkedList();
-    singlyLinkedList.insertInBegin(3);
-    singlyLinkedList.insertInBegin(2);
-    singlyLinkedList.insertInBegin(1);
+    test("should return true if the list contains the specified node", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.unshift(new LinkedListNode(i));
 
-    const it = singlyLinkedList.getIterator();
-    const next = it.next();
+        assert.ok(list.contains(new LinkedListNode(0)))
+    });
 
-    assert.equal(1, next.value);
-  });
+    test("should return false if the list doesn't contains the specified node", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.unshift(new LinkedListNode(i));
 
-  test("should insert new value at end", () => {
-    const singlyLinkedList: SinglyLinkedList<number> = new SinglyLinkedList();
-    singlyLinkedList.insertAtEnd(1);
-    singlyLinkedList.insertAtEnd(2);
-    singlyLinkedList.insertAtEnd(3);
-
-    const it = singlyLinkedList.getIterator();
-    let lastValue = null;
-    for (const currValue of it) lastValue = currValue;
-    assert.equal(3, lastValue);
-  });
-
-  test("should removed from the begin", () => {
-    const singlyLinkedList: SinglyLinkedList<number> = new SinglyLinkedList();
-    singlyLinkedList.insertAtEnd(1);
-    singlyLinkedList.insertAtEnd(2);
-    singlyLinkedList.insertAtEnd(3);
-
-    singlyLinkedList.removeInBegin();
-
-    const it = singlyLinkedList.getIterator();
-    let firstValue = null;
-    for (const currValue of it) {
-        firstValue = currValue;
-        break;
-    }
-
-    assert.notEqual(1, firstValue);
-  });
-
-  test("should removed from the end", () => {
-    const singlyLinkedList: SinglyLinkedList<number> = new SinglyLinkedList();
-    singlyLinkedList.insertAtEnd(1);
-    singlyLinkedList.insertAtEnd(2);
-    singlyLinkedList.insertAtEnd(3);
-
-    singlyLinkedList.removeAtEnd();
-
-    const it = singlyLinkedList.getIterator();
-    let lastValue = null;
-    for (const currValue of it) lastValue = currValue;
-    assert.notEqual(3, lastValue);
-  });
+        assert.equal(list.contains(new LinkedListNode(69)), false)
+    })
 });
