@@ -1,0 +1,17 @@
+{
+  "name": "ts-data-structures",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test **/*.spec.js",
+    "test:watch": "node --test --watch **/*.spec.js"
+  },
+  "keywords": [],
+  "author": "MateusMelo",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "typescript": "^5.2.2"
+  }
+}
