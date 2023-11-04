@@ -4,49 +4,23 @@ export class LinkedListNode<T> {
 }
 
 interface ILinkedList<T> {
-    addFirst(node: LinkedListNode<T>): LinkedListNode<T>;
-    addLast(node: LinkedListNode<T>): LinkedListNode<T>;
-    clear(): void;
     contains(node: LinkedListNode<T>): boolean;
     peek(): LinkedListNode<T> | null;
     pop(): LinkedListNode<T> | null;
     shift(): LinkedListNode<T> | null;
     unshift(node: LinkedListNode<T> | null): void;
     push(node: LinkedListNode<T> | null): void;
-    set(index: number, node: LinkedListNode<T>): LinkedListNode<T>;
-    get(index: number): LinkedListNode<T>;
-    remove(index: number): LinkedListNode<T>;
-    size(): number;
+    set(index: number, node: LinkedListNode<T>): LinkedListNode<T> | null;
+    get(index: number): LinkedListNode<T> | null;
+    remove(index: number): LinkedListNode<T> | null;
+    clear(): void;
+    len(): number;
 }
 
 export class SinglyLinkedList<T> implements ILinkedList<T> {
     private head: LinkedListNode<T> | null = null;
+    private length: number = 0;
     constructor() {}
-
-    public addFirst(n: LinkedListNode<T>): LinkedListNode<T> {
-        if (!this.head) {
-            this.head = n;
-        } else {
-            n.next = this.head;
-            this.head = n;
-        }
-
-        return n;
-    }
-
-    public addLast(n: LinkedListNode<T>): LinkedListNode<T> {
-        if (!this.head) {
-            this.head = n;
-        } else {
-            const last = this.getLast(this.head);
-            last.next = n;
-        }
-        return n;
-    }
-
-    public clear() {
-        this.head = null;
-    }
 
     public contains(n: LinkedListNode<T>): boolean {
         if (!this.head) return false;
@@ -90,16 +64,96 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return head;
     }
 
-    public search(value: T): LinkedListNode<T> | null {
+    /**
+     * Adds the specified node to the beginning of the list
+     * @param {LinkedListNode<T>} node The node instance to be added
+     */
+    public unshift(node: LinkedListNode<T>): void {
+        node.next = this.head;
+        this.head = node;
+        this.length++;
+    }
+
+    public push(node: LinkedListNode<T>): LinkedListNode<T> {
+        if (!this.head) {
+            this.head = node;
+        } else {
+            const last = this.getLast(this.head);
+            last.next = node;
+        }
+        this.length++;
+        return node;
+    }
+
+    /**
+     * Replaces the node at the specified index with the specified node
+     * @param {number} index The index of node to be replaced
+     * @param {LinkedListNode<T>} node The node instance to be added
+     */
+    public set(index: number, node: LinkedListNode<T>): LinkedListNode<T> | null {
+        if (!this.head) return null;
+        if (index < 0 || index > this.length) return null;
+
         let curr: LinkedListNode<T> | null = this.head;
-        let n: LinkedListNode<T> | null = null;
+        let i = 0;
         while (curr !== null) {
-            if (curr.data === value) {
-                n = curr;
+            if (i === index) {
+                node.next = curr.next;
+                curr = node;
+                return node;
             }
             curr = curr.next;
+            i++;
         }
-        return n;
+        return null;
+    }
+
+    /**
+     * Get the node at the specified index
+     * @param {number} index The index of node to be returned
+     */
+    public get(index: number): LinkedListNode<T> | null {
+        if (!this.head) return null;
+        if (index < 0 || index > this.length) return null;
+
+        let curr: LinkedListNode<T> | null = this.head;
+        let i = 0;
+        while (curr !== null) {
+            if (i === index) return curr;
+            curr = curr.next;
+            i++;
+        }
+        return null;
+    }
+
+    /**
+     * Get the node at the specified index
+     * @param {number} index The index of node to be returned
+     */
+    public remove(index: number): LinkedListNode<T> | null {
+        if (!this.head) return null;
+        if (index < 0 || index > this.length) return null;
+
+        let curr: LinkedListNode<T> | null = this.head;
+        let prev = null;
+        let i = 0;
+        while (curr !== null) {
+            if (i === index) {
+                curr = curr.next;
+                return curr;
+            }
+            curr = curr.next;
+            i++;
+        }
+        return null;
+    }
+
+    public clear() {
+        this.head = null;
+    }
+
+    public len(): number {
+        return this.length;
     }
 
     public *getIterator(): Generator<T, void, unknown> {
