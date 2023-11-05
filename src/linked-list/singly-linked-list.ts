@@ -58,8 +58,8 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     }
 
     /**
-     * Removes and returns the last element of this list
-     * @returns {LinkedListNode<T> | null} The node at the front of the list
+     * Removes and returns the last element of the list
+     * @returns {LinkedListNode<T> | null} The node at the end of the list
      */
     public pop(): LinkedListNode<T> | null {
         if (!this.head) return null;
@@ -80,10 +80,16 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return prev;
     }
 
+     /**
+     * Removes and returns the first element of the list
+     * @returns {LinkedListNode<T> | null} The node at the front of the list
+     */
     public shift(): LinkedListNode<T> | null {
         if (!this.head) return null;
         const head = this.head;
         this.head = head.next;
+
+        this.length--;
 
         return head;
     }

@@ -42,6 +42,7 @@ describe("Singly Linked List tests", () => {
 
         assert.equal(tail?.data, 2);
         assert.equal(list.last()?.data, 1);
+        assert.equal(list.len(), 2);
     })
 
     test("should return null when the tail of the list is null", () => {
@@ -49,5 +50,27 @@ describe("Singly Linked List tests", () => {
         const tail = list.pop();
 
         assert.equal(tail, null);
+    })
+
+    test("should removes and return the head of the list", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const head = list.shift();
+
+        assert.equal(head?.data, 0);
+        assert.equal(list.len(), 2);
+    })
+
+    test("should return null when the head of the list is null", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const head = list.shift();
+
+        assert.equal(head?.data, 0);
+        assert.equal(list.len(), 2);
     })
 });
