@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test **/*.spec.js",
-    "test:watch": "node --test --watch **/*.spec.js"
+    "test:watch": "node --test --watch **/*.spec.js",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "MateusMelo",
