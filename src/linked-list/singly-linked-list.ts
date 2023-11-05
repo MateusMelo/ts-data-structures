@@ -1,25 +1,12 @@
-export class LinkedListNode<T> {
-    public next: LinkedListNode<T> | null = null;
+import { LinkedList } from "./interfaces/linked-list.interface";
+
+export class SinglyLinkedListNode<T> {
+    public next: SinglyLinkedListNode<T> | null = null;
     constructor(public data: T) {}
 }
 
-interface ILinkedList<T> {
-    contains(node: LinkedListNode<T>): boolean;
-    peek(): LinkedListNode<T> | null;
-    last(): LinkedListNode<T> | null;
-    pop(): LinkedListNode<T> | null;
-    shift(): LinkedListNode<T> | null;
-    unshift(node: LinkedListNode<T> | null): void;
-    push(node: LinkedListNode<T> | null): void;
-    set(index: number, node: LinkedListNode<T>): LinkedListNode<T> | null;
-    get(index: number): LinkedListNode<T> | null;
-    remove(index: number): LinkedListNode<T> | null;
-    clear(): void;
-    len(): number;
-}
-
-export class SinglyLinkedList<T> implements ILinkedList<T> {
-    private head: LinkedListNode<T> | null = null;
+export class SinglyLinkedList<T> implements LinkedList<T> {
+    private head: SinglyLinkedListNode<T> | null = null;
     private length: number = 0;
     constructor() {}
 
@@ -28,9 +15,9 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * @param node {LinkedListNode<T>} The node whose presence in this list is to be tested
      * @returns {boolean}
      */
-    public contains(node: LinkedListNode<T>): boolean {
+    public contains(node: SinglyLinkedListNode<T>): boolean {
         if (!this.head) return false;
-        let curr: LinkedListNode<T> | null = this.head;
+        let curr: SinglyLinkedListNode<T> | null = this.head;
         while (curr !== null) {
             if (curr.data === node.data) 
                 return true
@@ -45,7 +32,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Retrieves the head of the list
      * @returns {LinkedListNode<T> | null} The head of the list
      */
-    public peek(): LinkedListNode<T> | null {
+    public peek(): SinglyLinkedListNode<T> | null {
         return this.head;
     }
 
@@ -53,7 +40,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Retrieves the tail of the list
      * @returns {LinkedListNode<T> | null} The tail of the list
      */
-    public last(): LinkedListNode<T> | null {
+    public last(): SinglyLinkedListNode<T> | null {
         return this.get(this.len() - 1);
     }
 
@@ -61,11 +48,11 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Removes and returns the last element of the list
      * @returns {LinkedListNode<T> | null} The node at the end of the list
      */
-    public pop(): LinkedListNode<T> | null {
+    public pop(): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
 
-        let curr: LinkedListNode<T> | null = this.head;
-        let prev: LinkedListNode<T> | null = null;
+        let curr: SinglyLinkedListNode<T> | null = this.head;
+        let prev: SinglyLinkedListNode<T> | null = null;
         while (curr !== null) {
             prev = curr;
             curr = curr.next;
@@ -84,7 +71,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Removes and returns the first element of the list
      * @returns {LinkedListNode<T> | null} The node at the front of the list
      */
-    public shift(): LinkedListNode<T> | null {
+    public shift(): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
         const head = this.head;
         this.head = head.next;
@@ -98,7 +85,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Adds the specified node to the beginning of the list
      * @param {LinkedListNode<T>} node The node instance to be added
      */
-    public unshift(node: LinkedListNode<T>): void {
+    public unshift(node: SinglyLinkedListNode<T>): void {
         node.next = this.head;
         this.head = node;
         this.length++;
@@ -108,7 +95,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Adds the specified node at the end of the list
      * @param {LinkedListNode<T>} node The node instance to be added
      */
-    public push(node: LinkedListNode<T>): LinkedListNode<T> {
+    public push(node: SinglyLinkedListNode<T>): SinglyLinkedListNode<T> {
         if (!this.head) {
             this.head = node;
         } else {
@@ -124,7 +111,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * @param {number} index The index of node to be replaced
      * @param {LinkedListNode<T>} node The node instance to be added
      */
-    public set(index: number, node: LinkedListNode<T>): LinkedListNode<T> | null {
+    public set(index: number, node: SinglyLinkedListNode<T>): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
         if (index < 0 || index > this.length) return null;
         if (index === 0) {
@@ -133,7 +120,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
             return node;
         }
 
-        let curr: LinkedListNode<T> | null = this.head;
+        let curr: SinglyLinkedListNode<T> | null = this.head;
         let prev = null;
         let i = 0;
         while (curr !== null) {
@@ -153,11 +140,11 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Get the node at the specified index
      * @param {number} index The index of node to be returned
      */
-    public get(index: number): LinkedListNode<T> | null {
+    public get(index: number): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
         if (index < 0 || index > this.length) return null;
 
-        let curr: LinkedListNode<T> | null = this.head;
+        let curr: SinglyLinkedListNode<T> | null = this.head;
         let i = 0;
         while (curr !== null) {
             if (i === index) return curr;
@@ -171,7 +158,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
      * Removes the node at the specified index
      * @param {number} index The index of node to be removed
      */
-    public remove(index: number): LinkedListNode<T> | null {
+    public remove(index: number): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
         if (index < 0 || index > this.length) return null;
         if (index === 0) {
@@ -181,7 +168,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
             return tmp;
         }
 
-        let curr: LinkedListNode<T> | null = this.head;
+        let curr: SinglyLinkedListNode<T> | null = this.head;
         let prev = null;
         let i = 0;
         while (curr !== null) {
@@ -226,7 +213,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     /**
      * Retrieves the last node of the list
      */
-    private getLast(node: LinkedListNode<T>): LinkedListNode<T> {
+    private getLast(node: SinglyLinkedListNode<T>): SinglyLinkedListNode<T> {
         return node.next ? this.getLast(node.next) : node;
     }
 }
