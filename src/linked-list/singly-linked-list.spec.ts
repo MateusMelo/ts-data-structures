@@ -29,9 +29,25 @@ describe("Singly Linked List tests", () => {
 
     test("should return null when the first element of the list is not found", () => {
         const list = new SinglyLinkedList();
+
+        assert.equal(list.peek(), null);
+    })
+
+    test("should removes and return the tail of the list", () => {
+        const list = new SinglyLinkedList();
         for (let i = 0; i < 3; i++)
             list.push(new LinkedListNode(i));
 
-        assert.notEqual(list.peek()?.data, 69);
+        const tail = list.pop();
+
+        assert.equal(tail?.data, 2);
+        assert.equal(list.last()?.data, 1);
+    })
+
+    test("should return null when the tail of the list is null", () => {
+        const list = new SinglyLinkedList();
+        const tail = list.pop();
+
+        assert.equal(tail, null);
     })
 });

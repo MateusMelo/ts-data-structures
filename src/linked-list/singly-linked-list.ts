@@ -6,6 +6,7 @@ export class LinkedListNode<T> {
 interface ILinkedList<T> {
     contains(node: LinkedListNode<T>): boolean;
     peek(): LinkedListNode<T> | null;
+    last(): LinkedListNode<T> | null;
     pop(): LinkedListNode<T> | null;
     shift(): LinkedListNode<T> | null;
     unshift(node: LinkedListNode<T> | null): void;
@@ -22,11 +23,16 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     private length: number = 0;
     constructor() {}
 
-    public contains(n: LinkedListNode<T>): boolean {
+    /**
+     * Returns true if the list contains the specified node
+     * @param node {LinkedListNode<T>} The node whose presence in this list is to be tested
+     * @returns {boolean}
+     */
+    public contains(node: LinkedListNode<T>): boolean {
         if (!this.head) return false;
         let curr: LinkedListNode<T> | null = this.head;
         while (curr !== null) {
-            if (curr.data === n.data) 
+            if (curr.data === node.data) 
                 return true
 
             curr = curr.next;
@@ -35,16 +41,32 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return false;
     }
 
+    /**
+     * Retrieves the head of the list
+     * @returns {LinkedListNode<T> | null} The head of the list
+     */
     public peek(): LinkedListNode<T> | null {
         return this.head;
     }
 
+    /**
+     * Retrieves the tail of the list
+     * @returns {LinkedListNode<T> | null} The tail of the list
+     */
+    public last(): LinkedListNode<T> | null {
+        return this.get(this.len() - 1);
+    }
+
+    /**
+     * Removes and returns the last element of this list
+     * @returns {LinkedListNode<T> | null} The node at the front of the list
+     */
     public pop(): LinkedListNode<T> | null {
         if (!this.head) return null;
 
         let curr: LinkedListNode<T> | null = this.head;
         let prev: LinkedListNode<T> | null = null;
-        while (curr.next !== null) {
+        while (curr !== null) {
             prev = curr;
             curr = curr.next;
         }
@@ -52,6 +74,8 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         if (prev) {
             prev.next = null;
         }
+
+        this.length--;
 
         return prev;
     }
