@@ -164,34 +164,54 @@ describe("Singly Linked List tests", () => {
 
   describe("remove()", () => {
     test("should remove the node at specified index", () => {
-        const list = new SinglyLinkedList<number>();
-        for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
-  
-        assert.equal(list.remove(0)?.data, 0);
-        assert.equal(list.len(), 2);
-      });
+      const list = new SinglyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
 
-      test("should return null if specified index is greather than list length", () => {
-        const list = new SinglyLinkedList<number>();
-        for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
-  
-        assert.equal(list.remove(69), null);
-        assert.equal(list.len(), 3);
-      });
-  
-      test("should return null if specified index is less than 0", () => {
-        const list = new SinglyLinkedList<number>();
-        for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
-  
-        assert.equal(list.remove(-1), null);
-        assert.equal(list.len(), 3);
-      });
-  
-      test("should return null if list is empty", () => {
-        const list = new SinglyLinkedList<number>();
-  
-        assert.equal(list.remove(0), null);
-        assert.equal(list.len(), 0);
-      });
+      assert.equal(list.remove(0)?.data, 0);
+      assert.equal(list.len(), 2);
+    });
+
+    test("should return null if specified index is greather than list length", () => {
+      const list = new SinglyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
+
+      assert.equal(list.remove(69), null);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if specified index is less than 0", () => {
+      const list = new SinglyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
+
+      assert.equal(list.remove(-1), null);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if list is empty", () => {
+      const list = new SinglyLinkedList<number>();
+
+      assert.equal(list.remove(0), null);
+      assert.equal(list.len(), 0);
+    });
+  });
+
+  describe("clear()", () => {
+    test("should clear all the list nodes", () => {
+      const list = new SinglyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
+
+      list.clear();
+
+      assert.equal(list.len(), 0);
+    });
+  });
+
+  describe("len()", () => {
+    test("should retrieve the current list length", () => {
+      const list = new SinglyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new LinkedListNode(i));
+
+      assert.equal(list.len(), 3);
+    });
   });
 });

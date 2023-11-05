@@ -199,6 +199,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
 
     public clear() {
         this.head = null;
+        this.length = 0;
     }
 
     public len(): number {
