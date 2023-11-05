@@ -127,15 +127,22 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     public set(index: number, node: LinkedListNode<T>): LinkedListNode<T> | null {
         if (!this.head) return null;
         if (index < 0 || index > this.length) return null;
+        if (index === 0) {
+            node.next = this.head.next;
+            this.head = node;
+            return node;
+        }
 
         let curr: LinkedListNode<T> | null = this.head;
+        let prev = null;
         let i = 0;
         while (curr !== null) {
-            if (i === index) {
+            if (i === index && prev) {
                 node.next = curr.next;
-                curr = node;
+                prev.next = node;
                 return node;
             }
+            prev = curr;
             curr = curr.next;
             i++;
         }

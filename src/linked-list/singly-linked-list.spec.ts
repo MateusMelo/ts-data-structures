@@ -97,4 +97,35 @@ describe("Singly Linked List tests", () => {
         assert.equal(list.last()?.data, node.data);
         assert.equal(list.len(), 4);
     })
+
+    test("should replace the node at specified index", () => {
+        const list = new SinglyLinkedList<number>();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const insertedNode = list.set(1, new LinkedListNode(69));
+        assert.ok(insertedNode !== null);
+        assert.equal(list.get(1)?.data, insertedNode.data);
+        assert.equal(list.len(), 3);
+    })
+
+    test("should return null if specified index is greather than list length", () => {
+        const list = new SinglyLinkedList<number>();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const insertedNode = list.set(69, new LinkedListNode(69));
+        assert.ok(insertedNode === null);
+        assert.equal(list.len(), 3);
+    })
+
+    test("should return null if specified index is less than 0", () => {
+        const list = new SinglyLinkedList<number>();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const insertedNode = list.set(-1, new LinkedListNode(69));
+        assert.ok(insertedNode === null);
+        assert.equal(list.len(), 3);
+    })
 });
