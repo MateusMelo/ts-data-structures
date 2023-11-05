@@ -74,7 +74,7 @@ describe("Singly Linked List tests", () => {
         assert.equal(list.len(), 2);
     })
 
-    test("should adds the node to the beginning of the list", () => {
+    test("should add the node to the beginning of the list", () => {
         const list = new SinglyLinkedList();
         for (let i = 0; i < 3; i++)
             list.push(new LinkedListNode(i));
@@ -83,6 +83,18 @@ describe("Singly Linked List tests", () => {
         list.unshift(node);
 
         assert.equal(list.peek()?.data, node.data);
+        assert.equal(list.len(), 4);
+    })
+
+    test("should add the node to the end of the list", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        const node = new LinkedListNode(69);
+        list.push(node);
+
+        assert.equal(list.last()?.data, node.data);
         assert.equal(list.len(), 4);
     })
 });

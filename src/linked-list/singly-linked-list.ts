@@ -104,6 +104,10 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         this.length++;
     }
 
+    /**
+     * Adds the specified node at the end of the list
+     * @param {LinkedListNode<T>} node The node instance to be added
+     */
     public push(node: LinkedListNode<T>): LinkedListNode<T> {
         if (!this.head) {
             this.head = node;
