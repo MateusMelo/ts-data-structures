@@ -197,15 +197,24 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return null;
     }
 
-    public clear() {
+    /**
+     * Clear all nodes from the list
+     */
+    public clear(): void {
         this.head = null;
         this.length = 0;
     }
 
+    /**
+     * Retrieves the current list length
+     */
     public len(): number {
         return this.length;
     }
 
+    /**
+     * Returns an iterator over the nodes of the list
+     */
     public *getIterator(): Generator<T, void, unknown> {
         let curr = this.head;
         while (curr !== null) {
@@ -214,7 +223,10 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         }
     }
 
-    private getLast(n: LinkedListNode<T>): LinkedListNode<T> {
-        return n.next ? this.getLast(n.next) : n;
+    /**
+     * Retrieves the last node of the list
+     */
+    private getLast(node: LinkedListNode<T>): LinkedListNode<T> {
+        return node.next ? this.getLast(node.next) : node;
     }
 }
