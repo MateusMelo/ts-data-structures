@@ -6,7 +6,7 @@ describe("Singly Linked List tests", () => {
     test("should return true if the list contains the specified node", () => {
         const list = new SinglyLinkedList();
         for (let i = 0; i < 3; i++)
-            list.unshift(new LinkedListNode(i));
+            list.push(new LinkedListNode(i));
 
         assert.ok(list.contains(new LinkedListNode(0)))
     });
@@ -14,8 +14,24 @@ describe("Singly Linked List tests", () => {
     test("should return false if the list doesn't contains the specified node", () => {
         const list = new SinglyLinkedList();
         for (let i = 0; i < 3; i++)
-            list.unshift(new LinkedListNode(i));
+            list.push(new LinkedListNode(i));
 
         assert.equal(list.contains(new LinkedListNode(69)), false)
+    })
+
+    test("should return the first element of the list", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        assert.equal(list.peek()?.data, 0);
+    })
+
+    test("should return null when the first element of the list is not found", () => {
+        const list = new SinglyLinkedList();
+        for (let i = 0; i < 3; i++)
+            list.push(new LinkedListNode(i));
+
+        assert.notEqual(list.peek()?.data, 69);
     })
 });
