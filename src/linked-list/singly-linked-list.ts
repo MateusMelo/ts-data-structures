@@ -174,15 +174,23 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     public remove(index: number): LinkedListNode<T> | null {
         if (!this.head) return null;
         if (index < 0 || index > this.length) return null;
+        if (index === 0) {
+            const tmp = this.head;
+            this.head = this.head.next;
+            this.length--;
+            return tmp;
+        }
 
         let curr: LinkedListNode<T> | null = this.head;
         let prev = null;
         let i = 0;
         while (curr !== null) {
-            if (i === index) {
-                curr = curr.next;
+            if (i === index && prev) {
+                prev.next = curr.next;
+                this.length--;
                 return curr;
             }
+            prev = curr;
             curr = curr.next;
             i++;
         }
