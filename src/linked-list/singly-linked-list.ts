@@ -168,8 +168,8 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
     }
 
     /**
-     * Get the node at the specified index
-     * @param {number} index The index of node to be returned
+     * Removes the node at the specified index
+     * @param {number} index The index of node to be removed
      */
     public remove(index: number): LinkedListNode<T> | null {
         if (!this.head) return null;
