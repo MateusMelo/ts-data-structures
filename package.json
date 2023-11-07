@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test **/*.spec.js",
-    "test:watch": "node --test --watch **/*.spec.js",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "test": "npm run build && node --test dist/tests/**/*.spec.js",
+    "test:watch": "npm run build && node --test --watch dist/tests/**/*.spec.js",
     "clean": "rm -rf dist"
   },
   "keywords": [],

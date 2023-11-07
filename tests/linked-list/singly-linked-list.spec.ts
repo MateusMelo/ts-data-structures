@@ -1,6 +1,6 @@
 import { test, describe } from "node:test";
 import assert from "node:assert";
-import { SinglyLinkedList, SinglyLinkedListNode } from "./singly-linked-list";
+import { SinglyLinkedList, SinglyLinkedListNode } from "../../src/linked-list/singly-linked-list";
 
 describe("Singly Linked List tests", () => {
   describe("contains()", () => {
