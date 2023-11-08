@@ -36,4 +36,46 @@ describe("Doubly Linked List tests", () => {
       assert.equal(list.peek(), null);
     });
   });
+
+  describe("pop()", () => {
+    test("should removes and return the tail of the list", () => {
+      const list = new DoublyLinkedList();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const tail = list.pop();
+
+      assert.equal(tail?.data, 2);
+      assert.equal(list.last()?.data, 1);
+      assert.equal(list.len(), 2);
+    });
+
+    test("should return null when the tail of the list is null", () => {
+      const list = new DoublyLinkedList();
+      const tail = list.pop();
+
+      assert.equal(tail, null);
+    });
+  });
+
+  describe("shift()", () => {
+    test("should removes and return the head of the list", () => {
+      const list = new DoublyLinkedList();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const head = list.shift();
+
+      assert.equal(head?.data, 0);
+      assert.equal(list.len(), 2);
+    });
+
+    test("should return null when the head of the list is null", () => {
+      const list = new DoublyLinkedList();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const head = list.shift();
+
+      assert.equal(head?.data, 0);
+      assert.equal(list.len(), 2);
+    });
+  });
 });
