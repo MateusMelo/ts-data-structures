@@ -12,7 +12,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Returns true if the list contains the specified node
-     * @param node {LinkedListNode<T>} The node whose presence in this list is to be tested
+     * @param node {SinglyLinkedListNode<T>} The node whose presence in this list is to be tested
      * @returns {boolean}
      */
     public contains(node: SinglyLinkedListNode<T>): boolean {
@@ -30,7 +30,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Retrieves the head of the list
-     * @returns {LinkedListNode<T> | null} The head of the list
+     * @returns {SinglyLinkedListNode<T> | null} The head of the list
      */
     public peek(): SinglyLinkedListNode<T> | null {
         return this.head;
@@ -38,7 +38,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Retrieves the tail of the list
-     * @returns {LinkedListNode<T> | null} The tail of the list
+     * @returns {SinglyLinkedListNode<T> | null} The tail of the list
      */
     public last(): SinglyLinkedListNode<T> | null {
         return this.get(this.len() - 1);
@@ -46,7 +46,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Removes and returns the last element of the list
-     * @returns {LinkedListNode<T> | null} The node at the end of the list
+     * @returns {SinglyLinkedListNode<T> | null} The node at the end of the list
      */
     public pop(): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
@@ -69,7 +69,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
      /**
      * Removes and returns the first element of the list
-     * @returns {LinkedListNode<T> | null} The node at the front of the list
+     * @returns {SinglyLinkedListNode<T> | null} The node at the front of the list
      */
     public shift(): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;
@@ -83,7 +83,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Adds the specified node to the beginning of the list
-     * @param {LinkedListNode<T>} node The node instance to be added
+     * @param {SinglyLinkedList<T>} node The node instance to be added
      */
     public unshift(node: SinglyLinkedListNode<T>): void {
         node.next = this.head;
@@ -93,7 +93,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
 
     /**
      * Adds the specified node at the end of the list
-     * @param {LinkedListNode<T>} node The node instance to be added
+     * @param {SinglyLinkedList<T>} node The node instance to be added
      */
     public push(node: SinglyLinkedListNode<T>): SinglyLinkedListNode<T> {
         if (!this.head) {
@@ -109,7 +109,7 @@ export class SinglyLinkedList<T> implements LinkedList<T> {
     /**
      * Replaces the node at the specified index with the specified node
      * @param {number} index The index of node to be replaced
-     * @param {LinkedListNode<T>} node The node instance to be added
+     * @param {SinglyLinkedList<T>} node The node instance to be added
      */
     public set(index: number, node: SinglyLinkedListNode<T>): SinglyLinkedListNode<T> | null {
         if (!this.head) return null;

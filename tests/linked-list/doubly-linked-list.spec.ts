@@ -78,4 +78,60 @@ describe("Doubly Linked List tests", () => {
       assert.equal(list.len(), 2);
     });
   });
+
+  describe("unshift()", () => {
+    test("should add the node to the beginning of the list", () => {
+      const list = new DoublyLinkedList();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const node = new DoublyLinkedListNode(69);
+      list.unshift(node);
+
+      assert.equal(list.peek()?.data, node.data);
+      assert.equal(list.len(), 4);
+    });
+  });
+
+  describe("push()", () => {
+    test("should add the node to the end of the list", () => {
+      const list = new DoublyLinkedList();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const node = new DoublyLinkedListNode(69);
+      list.push(node);
+
+      assert.equal(list.last()?.data, node.data);
+      assert.equal(list.len(), 4);
+    });
+  });
+
+  describe("set()", () => {
+    test("should replace the node at specified index", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const insertedNode = list.set(1, new DoublyLinkedListNode(69));
+      assert.ok(insertedNode !== null);
+      assert.equal(list.get(1)?.data, insertedNode.data);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if specified index is greather than list length", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const insertedNode = list.set(69, new DoublyLinkedListNode(69));
+      assert.equal(insertedNode, null);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if specified index is less than 0", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      const insertedNode = list.set(-1, new DoublyLinkedListNode(69));
+      assert.equal(insertedNode, null);
+      assert.equal(list.len(), 3);
+    });
+  });
 });

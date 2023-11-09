@@ -70,13 +70,26 @@ export class DoublyLinkedList<T> implements LinkedList<T> {
     return head;
   }
 
-  public unshift(node: DoublyLinkedListNode<T> | null): void {
-    assert.ok(false && "unshift() is not implemented yet.");
+  /**
+   * Adds the specified node to the beginning of the list
+   * @param {DoublyLinkedListNode<T>} node The node instance to be added
+   */
+  public unshift(node: DoublyLinkedListNode<T>): void {
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.next = this.head;
+      this.head.prev = node;
+      this.head = node;
+    }
+
+    this.length++;
   }
 
   /**
    * Adds the specified node at the end of the list
-   * @param {LinkedListNode<T>} node The node instance to be added
+   * @param {DoublyLinkedListNode<T>} node The node instance to be added
    */
   public push(node: DoublyLinkedListNode<T>): void {
     if (!this.head) {
@@ -93,15 +106,64 @@ export class DoublyLinkedList<T> implements LinkedList<T> {
     this.length++;
   }
 
+  /**
+   * Replaces the node at the specified index with the specified node
+   * @param {number} index The index of node to be replaced
+   * @param {DoublyLinkedListNode<T>} node The node instance to be added
+   */
   public set(
     index: number,
     node: DoublyLinkedListNode<T>
   ): DoublyLinkedListNode<T> | null {
-    assert.ok(false && "set() is not implemented yet.");
+    if (!this.head) return null;
+    if (index < 0 || index > this.len()) return null;
+    if (index === 0) {
+      this.head = node;
+      if (this.len() === 1) {
+        this.tail = node;
+      }
+      return node;
+    }
+
+    let i = 0;
+    let curr: DoublyLinkedListNode<T> | null = this.head;
+    while (curr !== null) {
+      if (i === index) {
+        node.prev = curr.prev;
+        node.next = curr.next;
+        assert.ok(node.prev !== null);
+        node.prev.next = node;
+        curr = node;
+
+        if (index === (this.len() - 1))
+          this.tail = node;
+
+        return node;
+      }
+      i++;
+      curr = curr.next;
+    }
+
+    return null;
   }
 
+  /**
+   * Get the node at the specified index
+   * @param {number} index The index of node to be returned
+   */
   public get(index: number): DoublyLinkedListNode<T> | null {
-    assert.ok(false && "get() is not implemented yet.");
+    if (!this.head) return null;
+    if (index < 0 || index > this.len()) return null;
+    if (index === 0) return this.head;
+
+    let curr: DoublyLinkedListNode<T> | null = this.head;
+    let i = 0;
+    while (curr !== null) {
+      if (index === i) return curr;
+      curr = curr.next;
+      i++;
+    }
+    return null;
   }
 
   public remove(index: number): DoublyLinkedListNode<T> | null {
@@ -116,11 +178,3 @@ export class DoublyLinkedList<T> implements LinkedList<T> {
     return this.length;
   }
 }
-
-
-const dll = new DoublyLinkedList();
-dll.push(new DoublyLinkedListNode(1));
-dll.push(new DoublyLinkedListNode(2));
-dll.push(new DoublyLinkedListNode(3));
-
-console.log(dll);

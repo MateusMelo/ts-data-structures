@@ -4,11 +4,13 @@
     "module": "commonjs",
     "outDir": "./dist",
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "removeComments": true
+    "removeComments": true,
+    "sourceMap": true
   },
   "include": [
     "tests/**/*.spec.ts"
