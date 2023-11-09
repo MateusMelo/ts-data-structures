@@ -134,4 +134,87 @@ describe("Doubly Linked List tests", () => {
       assert.equal(list.len(), 3);
     });
   });
+
+  describe("get()", () => {
+    test("should get the node at specified index", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.get(0)?.data, 0);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if specified index is greather than list length", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.get(69), null);
+    });
+
+    test("should return null if specified index is less than 0", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.get(-1), null);
+    });
+
+    test("should return null if list is empty", () => {
+      const list = new DoublyLinkedList<number>();
+
+      assert.equal(list.get(0), null);
+    });
+  });
+
+  describe("remove()", () => {
+    test("should remove the node at specified index", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.remove(0)?.data, 0);
+      assert.equal(list.len(), 2);
+    });
+
+    test("should return null if specified index is greather than list length", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.remove(69), null);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if specified index is less than 0", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.remove(-1), null);
+      assert.equal(list.len(), 3);
+    });
+
+    test("should return null if list is empty", () => {
+      const list = new DoublyLinkedList<number>();
+
+      assert.equal(list.remove(0), null);
+      assert.equal(list.len(), 0);
+    });
+  });
+
+  describe("clear()", () => {
+    test("should clear all the list nodes", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      list.clear();
+
+      assert.equal(list.len(), 0);
+    });
+  });
+
+  describe("len()", () => {
+    test("should retrieve the current list length", () => {
+      const list = new DoublyLinkedList<number>();
+      for (let i = 0; i < 3; i++) list.push(new DoublyLinkedListNode(i));
+
+      assert.equal(list.len(), 3);
+    });
+  });
 });

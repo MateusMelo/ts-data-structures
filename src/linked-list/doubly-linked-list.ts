@@ -135,8 +135,7 @@ export class DoublyLinkedList<T> implements LinkedList<T> {
         node.prev.next = node;
         curr = node;
 
-        if (index === (this.len() - 1))
-          this.tail = node;
+        if (index === this.len() - 1) this.tail = node;
 
         return node;
       }
@@ -167,13 +166,46 @@ export class DoublyLinkedList<T> implements LinkedList<T> {
   }
 
   public remove(index: number): DoublyLinkedListNode<T> | null {
-    assert.ok(false && "remove() is not implemented yet.");
+    if (!this.head) return null;
+    if (index < 0 || index > this.len()) return null;
+    if (index === 0) {
+      const head = this.head;
+      this.head = null;
+      if (this.len() === 1) {
+        this.tail = null;
+      }
+      this.length--;
+      return head;
+    }
+
+    let i = 0;
+    let curr: DoublyLinkedListNode<T> | null = this.head;
+    while (curr !== null) {
+      if (i === index) {
+        curr.prev = curr.next;
+        if (index === this.len() - 1) this.tail = curr.prev;
+        this.length--;
+        return curr;
+      }
+      i++;
+      curr = curr.next;
+    }
+
+    return null;
   }
 
+  /**
+   * Clear all nodes from the list
+   */
   public clear(): void {
-    assert.ok(false && "clear() is not implemented yet.");
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
   }
 
+  /**
+   * Retrieves the current list length
+   */
   public len(): number {
     return this.length;
   }
