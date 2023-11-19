@@ -2,7 +2,7 @@ import { IStack } from "./interfaces/stack.interface";
 
 type Data<T> = Record<string, T>;
 
-class Stack<T> implements IStack<T> {
+export class Stack<T> implements IStack<T> {
   private data: Data<T> = {};
   private index: number = -1;
   private readonly capacity: number = 0;
@@ -30,5 +30,9 @@ class Stack<T> implements IStack<T> {
 
   private isFull(): boolean {
     return this.index >= this.capacity - 1;
+  }
+
+  public isEmpty(): boolean {
+    return this.index < 0;
   }
 }

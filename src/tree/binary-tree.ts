@@ -1,3 +1,5 @@
+import { Stack } from "../stack/stack";
+
 class BinaryTreeNode<T> {
     public left: BinaryTreeNode<T> | null = null;
     public right: BinaryTreeNode<T> | null = null;
@@ -8,8 +10,9 @@ class BinaryTreeNode<T> {
 class BinaryTree<T> {
     public root: BinaryTreeNode<T> | null = null;
 
-    public insert(value: T): void { 
+    public insert(value: T): BinaryTreeNode<T> { 
         this.root = this.insertRec(this.root, value);
+        return this.root;
     }
 
     public search(value: T): BinaryTreeNode<T> | null {
@@ -17,7 +20,7 @@ class BinaryTree<T> {
     }
 
     private searchRec(node: BinaryTreeNode<T> | null, value: T): BinaryTreeNode<T> | null {
-        if (!node || node.value === value)
+        if (node === null || node.value === value)
             return node;
 
         if (value > node.value)
@@ -27,7 +30,7 @@ class BinaryTree<T> {
     }
 
     private insertRec(node: BinaryTreeNode<T> | null, value: T): BinaryTreeNode<T> {
-        if (!node)
+        if (node === null)
             return new BinaryTreeNode(value);
         
         if (value < node.value) {
@@ -38,16 +41,43 @@ class BinaryTree<T> {
 
         return node;
     }
+
+    public stackDepthFirstValues(): T[] {
+        if (this.root === null)
+            return [];
+
+        const values = [];
+        const stack = new Stack<BinaryTreeNode<T>>(10);
+        stack.push(this.root);
+
+        while (!stack.isEmpty()) {
+            const n = stack.pop();
+            
+            values.push(n.value);
+
+            if (n.right) stack.push(n.right);
+            if (n.left) stack.push(n.left);
+        }
+
+        return values;
+    }
+
+    public recursiveDepthFirstValues(node: BinaryTreeNode<T> | null): T[] {
+        if (node === null) return [];
+
+        const leftValues = this.recursiveDepthFirstValues(node.left);
+        const rightValues = this.recursiveDepthFirstValues(node.right);
+        
+        return [node.value, ...leftValues, ...rightValues];
+    }
 }
 
 const bt = new BinaryTree<number>();
-bt.insert(0);
 bt.insert(1);
 bt.insert(2);
 bt.insert(3);
 bt.insert(-1);
 bt.insert(-2);
 bt.insert(-3);
-bt.insert(-4);
-console.log(bt);
-// console.log(bt.search(-2));
+// console.log(bt.stackDepthFirstValues());
+console.log(bt.recursiveDepthFirstValues(bt.root));
