@@ -1,43 +1,43 @@
 import { Stack } from "../stack/stack";
 
-class BinarySearchTreeNode<T> {
+export class BinarySearchTreeNode<T> {
     public left: BinarySearchTreeNode<T> | null = null;
     public right: BinarySearchTreeNode<T> | null = null;
 
     constructor(public value: T) {}
 }
 
-class BinarySearchTree<T> {
+export class BinarySearchTree<T> {
     public root: BinarySearchTreeNode<T> | null = null;
 
     public insert(value: T): BinarySearchTreeNode<T> { 
-        this.root = this.recursiveInsert(this.root, value);
+        this.root = this._insert(this.root, value);
         return this.root;
     }
 
-    private recursiveInsert(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> {
+    private _insert(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> {
         if (node === null)
             return new BinarySearchTreeNode(value);
         
         if (value < node.value) {
-            node.left = this.recursiveInsert(node.left, value);
+            node.left = this._insert(node.left, value);
         } else if (value > node.value) {
-            node.right = this.recursiveInsert(node.right, value);
+            node.right = this._insert(node.right, value);
         }
 
         return node;
     }
 
     public search(value: T): BinarySearchTreeNode<T> | null {
-        return this.recursiveSearch(this.root, value);
+        return this._search(this.root, value);
     }
 
-    private recursiveSearch(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
+    private _search(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
         if (node === null || node.value === value)
             return node;
         if (value < node.value)
-            return this.recursiveSearch(node.left, value);
-        return this.recursiveSearch(node.right, value);
+            return this._search(node.left, value);
+        return this._search(node.right, value);
 
     }
 
