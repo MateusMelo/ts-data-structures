@@ -1,4 +1,7 @@
+import assert from "node:assert";
+import { Queue } from "../queue/queue";
 import { Stack } from "../stack/stack";
+import { BinaryTree } from "./interfaces/binary-tree";
 
 export class BinarySearchTreeNode<T> {
     public left: BinarySearchTreeNode<T> | null = null;
@@ -7,8 +10,8 @@ export class BinarySearchTreeNode<T> {
     constructor(public value: T) {}
 }
 
-export class BinarySearchTree<T> {
-    public root: BinarySearchTreeNode<T> | null = null;
+export class BinarySearchTree<T> implements BinaryTree<T> {
+    constructor(public root: BinarySearchTreeNode<T>) {}
 
     public insert(value: T): BinarySearchTreeNode<T> { 
         this.root = this._insert(this.root, value);
@@ -41,6 +44,47 @@ export class BinarySearchTree<T> {
 
     }
 
+    public delete(value: T): BinarySearchTreeNode<T> | null {
+        return this._delete(this.root, value);
+    }
+
+    private _delete(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
+        if (node === null) return node;
+        
+        if (node.value > value) {
+            node.left = this._delete(node.left, value);
+            return node;
+        } else if (node.value < value) {
+            node.right = this._delete(node.right, value);
+            return node;
+        }
+        
+        if (node.left === null) {
+            return node.right;
+        } else if (node.right === null) {
+            return node.left;
+        } else {
+            let parent = null; 
+            let succ = node.right;
+            while (succ.left !== null) {
+                parent = succ;
+                succ = succ.left;
+            }
+
+            if (parent !== null)
+                parent.left = succ.right;
+            else
+                node.right = succ.right;
+
+            node.value = succ.value;
+
+            // node.value = succ.value;
+            // node.right = this._delete(node.right, succ.value);
+
+            return node;
+        }
+    }
+
     public stackDepthFirstValues(): T[] {
         if (this.root === null)
             return [];
@@ -67,15 +111,62 @@ export class BinarySearchTree<T> {
             ...this.recursiveDepthFirstValues(node.right)
         ];
     }
+
+    public queueBreadthFirstValues(): T[] {
+        if (this.root === null)
+            return [];
+
+        const values = [];
+        const queue = new Queue<BinarySearchTreeNode<T>>();
+
+        queue.push(this.root);
+
+        while(!queue.isEmpty()) {
+            const n: BinarySearchTreeNode<T> | null = queue.pop();
+
+            assert(n !== null);
+
+            values.push(n.value);
+
+            if (n.left)
+                queue.push(n.left);
+
+            if (n.right)
+                queue.push(n.right);
+        }
+
+        return values;
+    }    
 }
 
-const bt = new BinarySearchTree<number>();
-bt.insert(1);
-bt.insert(2);
-bt.insert(3);
-bt.insert(-1);
-bt.insert(-2);
-bt.insert(-3);
-// console.log(bt.stackDepthFirstValues());
+const bt = new BinarySearchTree<string>(new BinarySearchTreeNode<string>("a"));
+bt.root.left = new BinarySearchTreeNode<string>("b");
+bt.root.left.left = new BinarySearchTreeNode<string>("d");
+bt.root.left.right = new BinarySearchTreeNode<string>("e");
+bt.root.right = new BinarySearchTreeNode<string>("c");
+bt.root.right.left = new BinarySearchTreeNode<string>("f");
 // console.log(bt.recursiveDepthFirstValues(bt.root));
-console.log(bt.search(10))
+// console.log(bt.delete(3));
+// console.log(bt.delete(3));
+// console.log(bt.stackDepthFirstValues());
+console.log(bt.queueBreadthFirstValues());
+
+/**
+ *              1
+ *            /   \
+ *           2     3
+ *          / \   / \
+ *         4   5 6   7 
+ *        / \
+ *       8   9    
+ */
+
+/**
+ *              6
+ *            /   \
+ *           2     3
+ *          / \     \
+ *         4   5     7 
+ *        / \
+ *       8   9    
+ */

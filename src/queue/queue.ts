@@ -1,37 +1,39 @@
 import { IQueue } from "./queue.interface";
 
-class Queue<T> implements IQueue<T> {
-    private head: number = -1;
-    private rear: number = -1;
+export class Queue<T> implements IQueue<T> {
     private data: Array<T> = [];
-    private capacity: number;
 
-    constructor(capacity: number) {
-        this.capacity = capacity;
-    }
+    constructor() {}
     
     public push(value: T): void {
-        if (this.isEmpty()) this.head++;
-        this.data[++this.rear] = value;
+        this.data.push(value);
     }
 
-    public pop(): T {
-        const poped = this.data[this.head];
-        this.head++;
-        return poped;
+    public pop(): T | null {
+        if (this.isEmpty())
+            return null;
+        const frame = this.data.shift();
+        if (!frame)
+            return null;
+        return frame
     }
 
-    public peek(): T {
-        return this.data[this.head];
+    public peek(): T | null {
+        if (this.isEmpty())
+            return null;
+        return this.data[0];
     }
 
     public isEmpty(): boolean {
-        return this.head === -1 && this.rear === -1;
+        return this.data.length === 0;
     }
 }
 
-const q = new Queue<number>(10);
-q.push(1);
-q.push(2);
-q.push(3);
-console.log(q);
+const q = new Queue<number>();
+// q.push(1);
+// q.push(2);
+// q.push(3);
+// console.log(q.pop());
+// console.log(q.pop());
+// console.log(q.pop());
+// console.log(q.peek());
