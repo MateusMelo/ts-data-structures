@@ -10,52 +10,74 @@ export class BinarySearchTreeNode<T> {
     constructor(public value: T) {}
 }
 
-export class BinarySearchTree<T> implements BinaryTree<T> {
+export class QueueBinarySearchTree<T> implements BinaryTree<T> {
     constructor(public root: BinarySearchTreeNode<T>) {}
 
-    public insert(value: T): BinarySearchTreeNode<T> { 
-        this.root = this._insert(this.root, value);
-        return this.root;
+    public search(root: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
+        if (root === null || root.value === value) return root;
+        const queue = new Queue<BinarySearchTreeNode<T>>();
+        queue.push(root);
+        while (!queue.isEmpty()) {
+            const node = queue.pop();
+
+            assert(node !== null);
+
+            if (node.value === value) return node;
+
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+        return null;
     }
 
-    private _insert(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> {
-        if (node === null)
-            return new BinarySearchTreeNode(value);
-        
-        if (value < node.value) {
-            node.left = this._insert(node.left, value);
-        } else if (value > node.value) {
-            node.right = this._insert(node.right, value);
+    public delete(root: BinarySearchTreeNode<T> | null): BinarySearchTreeNode<T> | null {
+        assert.ok(false && "Not implemented yet");
+    }
+
+    public breadthFirstValues(): T[] {
+        if (this.root === null)
+            return [];
+
+        const values = [];
+        const queue = new Queue<BinarySearchTreeNode<T>>();
+
+        queue.push(this.root);
+
+        while(!queue.isEmpty()) {
+            const n: BinarySearchTreeNode<T> | null = queue.pop();
+
+            assert(n !== null);
+
+            values.push(n.value);
+
+            if (n.left)
+                queue.push(n.left);
+
+            if (n.right)
+                queue.push(n.right);
         }
 
-        return node;
+        return values;
+    }
+}
+
+export class RecursiveBinarySearchTree<T> implements BinaryTree<T> {
+    constructor(public root: BinarySearchTreeNode<T>) {}
+
+    public search(root: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
+        if (root === null || root.value === value) return root;
+        if (value < root.value) return this.search(root.left, value) 
+        return this.search(root.right, value);
     }
 
-    public search(value: T): BinarySearchTreeNode<T> | null {
-        return this._search(this.root, value);
-    }
-
-    private _search(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
-        if (node === null || node.value === value)
-            return node;
-        if (value < node.value)
-            return this._search(node.left, value);
-        return this._search(node.right, value);
-
-    }
-
-    public delete(value: T): BinarySearchTreeNode<T> | null {
-        return this._delete(this.root, value);
-    }
-
-    private _delete(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
+    public delete(node: BinarySearchTreeNode<T> | null, value: T): BinarySearchTreeNode<T> | null {
         if (node === null) return node;
         
         if (node.value > value) {
-            node.left = this._delete(node.left, value);
-            return node;
+            node.left = this.delete(node.left, value);
+            return node; 
         } else if (node.value < value) {
-            node.right = this._delete(node.right, value);
+            node.right = this.delete(node.right, value);
             return node;
         }
         
@@ -85,7 +107,28 @@ export class BinarySearchTree<T> implements BinaryTree<T> {
         }
     }
 
-    public stackDepthFirstValues(): T[] {
+    public depthFirstValues(node: BinarySearchTreeNode<T> | null): T[] {
+        if (node === null) return [];
+        return [
+            node.value,
+            ...this.depthFirstValues(node.left),
+            ...this.depthFirstValues(node.right)
+        ];
+    }
+}
+
+export class StackBinarySearchTree<T> implements BinaryTree<T> {
+    constructor(public root: BinarySearchTreeNode<T>) {}
+
+    public delete(root: BinarySearchTreeNode<T>, value: T): BinarySearchTreeNode<T> | null {
+        assert.ok(false && "Not implemented yet");
+    }
+
+    public search(root: BinarySearchTreeNode<T>, value: T): BinarySearchTreeNode<T> | null {
+        assert.ok(false && "Not implemented yet");
+    }
+
+    public depthFirstValues(): T[] {
         if (this.root === null)
             return [];
 
@@ -102,54 +145,17 @@ export class BinarySearchTree<T> implements BinaryTree<T> {
 
         return values;
     }
-
-    public recursiveDepthFirstValues(node: BinarySearchTreeNode<T> | null): T[] {
-        if (node === null) return [];
-        return [
-            node.value,
-            ...this.recursiveDepthFirstValues(node.left),
-            ...this.recursiveDepthFirstValues(node.right)
-        ];
-    }
-
-    public queueBreadthFirstValues(): T[] {
-        if (this.root === null)
-            return [];
-
-        const values = [];
-        const queue = new Queue<BinarySearchTreeNode<T>>();
-
-        queue.push(this.root);
-
-        while(!queue.isEmpty()) {
-            const n: BinarySearchTreeNode<T> | null = queue.pop();
-
-            assert(n !== null);
-
-            values.push(n.value);
-
-            if (n.left)
-                queue.push(n.left);
-
-            if (n.right)
-                queue.push(n.right);
-        }
-
-        return values;
-    }    
 }
 
-const bt = new BinarySearchTree<string>(new BinarySearchTreeNode<string>("a"));
-bt.root.left = new BinarySearchTreeNode<string>("b");
-bt.root.left.left = new BinarySearchTreeNode<string>("d");
-bt.root.left.right = new BinarySearchTreeNode<string>("e");
-bt.root.right = new BinarySearchTreeNode<string>("c");
-bt.root.right.left = new BinarySearchTreeNode<string>("f");
-// console.log(bt.recursiveDepthFirstValues(bt.root));
-// console.log(bt.delete(3));
-// console.log(bt.delete(3));
-// console.log(bt.stackDepthFirstValues());
-console.log(bt.queueBreadthFirstValues());
+
+const bt = new RecursiveBinarySearchTree<number>(new BinarySearchTreeNode<number>(1));
+bt.root.left = new BinarySearchTreeNode<number>(2);
+bt.root.left.left = new BinarySearchTreeNode<number>(4);
+bt.root.left.right = new BinarySearchTreeNode<number>(5);
+bt.root.right = new BinarySearchTreeNode<number>(3);
+bt.root.right.left = new BinarySearchTreeNode<number>(7);
+
+console.log(bt.depthFirstValues(bt.root));
 
 /**
  *              1

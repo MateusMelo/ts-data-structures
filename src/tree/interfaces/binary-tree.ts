@@ -1,7 +1,6 @@
-import { Node } from "../types/node.type";
+import { BinarySearchTreeNode } from "../binary-search-tree";
 
 export interface BinaryTree<T> {
-    insert(value: T): Node<T>
-    search(value: T): Node<T> | null
-    delete(value: T): Node<T> | null
+    search(root: BinarySearchTreeNode<T>, value: T): BinarySearchTreeNode<T> | null
+    delete(root: BinarySearchTreeNode<T>, value: T): BinarySearchTreeNode<T> | null
 }
