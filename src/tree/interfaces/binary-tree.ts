@@ -1,4 +1,4 @@
-import { BinarySearchTreeNode } from "../binary-search-tree";
+import { BinarySearchTreeNode } from "../binary-search-tree-node";
 
 export interface BinaryTree<T> {
     search(root: BinarySearchTreeNode<T>, value: T): BinarySearchTreeNode<T> | null
