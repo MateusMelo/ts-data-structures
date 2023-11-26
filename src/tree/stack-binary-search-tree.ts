@@ -33,6 +33,22 @@ export class StackBinarySearchTree<T> implements BinaryTree<T> {
 
         return values;
     }
+
+    public includes(value: T): boolean {
+        if (this.root === null) return false;
+        const stack = new Stack<BinarySearchTreeNode<T>>(1000);
+        stack.push(this.root);
+
+        while (!stack.isEmpty()) {
+            const frame = stack.pop();
+
+            if (frame.value === value) return true;
+            if (frame.right) stack.push(frame.right);
+            if (frame.left) stack.push(frame.left);
+        }
+
+        return false;
+    }
 }
 
 const bt = new StackBinarySearchTree<number>(new BinarySearchTreeNode<number>(1));
@@ -42,7 +58,7 @@ bt.root.left.right = new BinarySearchTreeNode<number>(5);
 bt.root.right = new BinarySearchTreeNode<number>(3);
 bt.root.right.left = new BinarySearchTreeNode<number>(7);
 
-console.log(bt.depthFirstValues());
+console.log(bt.includes(0));
 
 /**
  *              1
