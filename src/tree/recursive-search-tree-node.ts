@@ -59,13 +59,32 @@ export class RecursiveBinarySearchTree<T> implements BinaryTree<T> {
         if (node.value === value) return true;
         return this.includes(node.left, value) || this.includes(node.right, value);
     }
+
+    public maxPathSum(node: BinarySearchTreeNode<T> | null) : number {
+        if (node === null) return 0;
+        if (node.left === null && node.right === null) return node.value as number;
+        return node.value as number + Math.max(this.maxPathSum(node.left), this.maxPathSum(node.right));
+    }
 }
 
 const bt = new RecursiveBinarySearchTree<number>(new BinarySearchTreeNode<number>(1));
 bt.root.left = new BinarySearchTreeNode<number>(2);
-bt.root.left.left = new BinarySearchTreeNode<number>(4);
 bt.root.left.right = new BinarySearchTreeNode<number>(5);
-bt.root.right = new BinarySearchTreeNode<number>(3);
-bt.root.right.left = new BinarySearchTreeNode<number>(7);
+bt.root.left.left = new BinarySearchTreeNode<number>(4);
+bt.root.left.left.left = new BinarySearchTreeNode<number>(8);
+bt.root.left.left.right = new BinarySearchTreeNode<number>(9);
 
-console.log(bt.includes(bt.root, 5));
+bt.root.right = new BinarySearchTreeNode<number>(3);
+bt.root.right.left = new BinarySearchTreeNode<number>(6);
+bt.root.right.right = new BinarySearchTreeNode<number>(7);
+/**
+ *              1
+ *            /   \
+ *           2     3
+ *          / \   / \
+ *         4   5 6   7
+ *        / \
+ *       8   9    
+ */
+
+console.log(bt.maxPathSum(bt.root));
