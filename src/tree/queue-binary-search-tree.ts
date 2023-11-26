@@ -27,8 +27,7 @@ export class QueueBinarySearchTree<T> implements BinaryTree<T> {
     }
 
     public breadthFirstValues(): T[] {
-        if (this.root === null)
-            return [];
+        if (this.root === null) return [];
 
         const values = [];
         const queue = new Queue<BinarySearchTreeNode<T>>();
@@ -48,4 +47,31 @@ export class QueueBinarySearchTree<T> implements BinaryTree<T> {
 
         return values;
     }
+
+    public includes(value: T): boolean {
+        if (this.root === null) return false;
+        const queue = new Queue<BinarySearchTreeNode<T>>();
+        queue.push(this.root);
+
+        while (!queue.isEmpty()) {
+            const n: BinarySearchTreeNode<T> | null = queue.pop();
+
+            assert(n !== null);
+
+            if (n.value === value) return true;
+            if (n.left) queue.push(n.left);
+            if (n.right) queue.push(n.right);
+        }
+       
+        return false;
+    }
 }
+
+const bt = new QueueBinarySearchTree<number>(new BinarySearchTreeNode<number>(1));
+bt.root.left = new BinarySearchTreeNode<number>(2);
+bt.root.left.left = new BinarySearchTreeNode<number>(4);
+bt.root.left.right = new BinarySearchTreeNode<number>(5);
+bt.root.right = new BinarySearchTreeNode<number>(3);
+bt.root.right.left = new BinarySearchTreeNode<number>(7);
+
+console.log(bt.includes(0));
