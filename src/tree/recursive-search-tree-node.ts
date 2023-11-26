@@ -53,4 +53,19 @@ export class RecursiveBinarySearchTree<T> implements BinaryTree<T> {
             ...this.depthFirstValues(node.right)
         ];
     }
+
+    public includes(node: BinarySearchTreeNode<T> | null, value: T): boolean {
+        if (node === null) return false;
+        if (node.value === value) return true;
+        return this.includes(node.left, value) || this.includes(node.right, value);
+    }
 }
+
+const bt = new RecursiveBinarySearchTree<number>(new BinarySearchTreeNode<number>(1));
+bt.root.left = new BinarySearchTreeNode<number>(2);
+bt.root.left.left = new BinarySearchTreeNode<number>(4);
+bt.root.left.right = new BinarySearchTreeNode<number>(5);
+bt.root.right = new BinarySearchTreeNode<number>(3);
+bt.root.right.left = new BinarySearchTreeNode<number>(7);
+
+console.log(bt.includes(bt.root, 5));
